@@ -25,6 +25,7 @@ const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
@@ -54,7 +55,7 @@ module.exports = {
 				loader: 'vue-loader'
 			},
 			{
-				test: /\.(scss|css)$/,
+				test: /\.css$/,
 
 				use: [
 					{
@@ -62,9 +63,35 @@ module.exports = {
 					},
 					{
 						loader: 'css-loader'
-					},
+					}
+				]
+			},
+			{
+				test: /\.s(c|a)ss$/,
+				use: [
+					'vue-style-loader',
+					'css-loader',
 					{
-						loader: 'sass-loader'
+						loader: 'sass-loader',
+						options: {
+							implementation: require('sass'),
+							sassOptions: {
+								fiber: require('fibers'),
+								indentedSyntax: true
+							}
+						}
+					}
+				]
+			},
+			{
+				test: /\.(woff(2)?|ttf|eot|svg)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'fonts/'
+						}
 					}
 				]
 			}
@@ -77,16 +104,18 @@ module.exports = {
 	},
 
 	plugins: [
+		new CleanWebpackPlugin(),
 		new VueLoaderPlugin(),
+		new VuetifyLoaderPlugin(),
 		new HtmlWebpackPlugin({
 			template: './src/index.html'
-		}),
-		new CleanWebpackPlugin()
+		})
 	],
 
 	resolve: {
 		alias: {
-		  vue$: "vue/dist/vue.esm.js"
+		  vue$: "vue/dist/vue.esm.js",
+		  '@': path.resolve('src')
 		}
 	  },
 
