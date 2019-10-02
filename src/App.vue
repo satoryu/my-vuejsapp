@@ -5,7 +5,7 @@
       app
     >
       <v-list dense>
-        <v-list-item @click="">
+        <v-list-item to="/">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -13,7 +13,7 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click="">
+        <v-list-item to="/contacts">
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
@@ -34,19 +34,9 @@
     </v-app-bar>
 
     <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col class="text-center">
-          </v-col>
-        </v-row>
-      </v-container>
+      <router-view></router-view>
     </v-content>
+
     <v-footer
       color="indigo"
       app
